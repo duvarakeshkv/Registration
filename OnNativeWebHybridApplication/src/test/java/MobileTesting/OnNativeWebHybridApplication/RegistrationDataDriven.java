@@ -1,10 +1,15 @@
 package MobileTesting.OnNativeWebHybridApplication;
 
-import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -12,22 +17,33 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 
-public class TestRegisterPage 
+public class RegistrationDataDriven
 {
 	public AndroidDriver driver;
+	public static String EXCEL_PATH="C:\\Users\\DuvarakeshKV\\Desktop\\reskill\\MOBILE TESTING\\mobiletestinglogins.xlsx";
 	
-	public String fn_Name="duvarakesh";
-	public String ln_Name="venugopal";
-	public String email_id="duva2441@gmail.com";
-	public String pass_word="duva1234";
-	public String conform_passowrd="duva1234";
-
 	@Test
-	public void login() throws InterruptedException 
+	public void login() throws InterruptedException, IOException 
 	{
+		File file= new File(EXCEL_PATH);
+        FileInputStream fis= new FileInputStream(file);
+        XSSFWorkbook wb= new XSSFWorkbook(fis);
+        XSSFSheet sheet=wb.getSheetAt(0);
+        int rc= sheet.getLastRowNum();
+        System.out.println(rc);
+        for (int i=1;i<=rc;i++) {
+            String fn_Name=sheet.getRow(i).getCell(0).getStringCellValue();
+            String ln_Name=sheet.getRow(i).getCell(1).getStringCellValue();
+            String email_id=sheet.getRow(i).getCell(2).getStringCellValue();
+            String pass_word=sheet.getRow(i).getCell(3).getStringCellValue();
+            String conform_passowrd=sheet.getRow(i).getCell(4).getStringCellValue();
+            System.out.println(fn_Name+" \n"+ln_Name+"\n"+email_id+"\n"+pass_word+"\n"+conform_passowrd);
+            
 		
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -84,11 +100,13 @@ public class TestRegisterPage
 
 			String actualMessage = driver.findElement(By.xpath("//div[@class='result']")).getText();
 			System.out.println("registration IS SUCCESS & SUCCESS MESSAGE IS :" + actualMessage);
-
+			
 		}
+        }
 
 	}
 
+	
 	@BeforeClass
 	public void beforeClass() throws MalformedURLException {
 		DesiredCapabilities capability = new DesiredCapabilities();

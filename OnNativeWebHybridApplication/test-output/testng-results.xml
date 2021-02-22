@@ -2,24 +2,24 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="51014" started-at="2021-02-22T08:30:45Z" finished-at="2021-02-22T08:31:36Z">
+  <suite name="Default suite" duration-ms="110178" started-at="2021-02-22T15:58:10Z" finished-at="2021-02-22T16:00:01Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="51014" started-at="2021-02-22T08:30:45Z" finished-at="2021-02-22T08:31:36Z">
-      <class name="MobileTesting.OnNativeWebHybridApplication.TestRegisterPage">
-        <test-method status="PASS" signature="beforeClass()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.TestRegisterPage@26653222]" name="beforeClass" is-config="true" duration-ms="32047" started-at="2021-02-22T14:00:45Z" finished-at="2021-02-22T14:01:17Z">
+    <test name="Default test" duration-ms="110178" started-at="2021-02-22T15:58:10Z" finished-at="2021-02-22T16:00:01Z">
+      <class name="MobileTesting.OnNativeWebHybridApplication.RegistrationWithDataDriven">
+        <test-method status="PASS" signature="beforeClass()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.RegistrationWithDataDriven@6a4f787b]" name="beforeClass" is-config="true" duration-ms="25563" started-at="2021-02-22T21:28:11Z" finished-at="2021-02-22T21:28:36Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeClass -->
-        <test-method status="PASS" signature="login()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.TestRegisterPage@26653222]" name="login" duration-ms="18220" started-at="2021-02-22T14:01:17Z" finished-at="2021-02-22T14:01:36Z">
+        <test-method status="PASS" signature="login()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.RegistrationWithDataDriven@6a4f787b]" name="login" duration-ms="83430" started-at="2021-02-22T21:28:36Z" finished-at="2021-02-22T21:30:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->
-        <test-method status="PASS" signature="afterClass()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.TestRegisterPage@26653222]" name="afterClass" is-config="true" duration-ms="716" started-at="2021-02-22T14:01:36Z" finished-at="2021-02-22T14:01:36Z">
+        <test-method status="PASS" signature="afterClass()[pri:0, instance:MobileTesting.OnNativeWebHybridApplication.RegistrationWithDataDriven@6a4f787b]" name="afterClass" is-config="true" duration-ms="1155" started-at="2021-02-22T21:30:00Z" finished-at="2021-02-22T21:30:01Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterClass -->
-      </class> <!-- MobileTesting.OnNativeWebHybridApplication.TestRegisterPage -->
+      </class> <!-- MobileTesting.OnNativeWebHybridApplication.RegistrationWithDataDriven -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
