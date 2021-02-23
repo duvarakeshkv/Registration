@@ -102,7 +102,7 @@ public class RegistrationDataDriven
 					.getText();
 			System.out.println("Registration IS FAILED & ERROR MESSAGE IS :" + errorMessage);
 			//Assert.assertEquals(errorMessage, expected_result);
-			generateTestStep(errorMessage,expected_result);
+			write_Output(errorMessage,expected_result);
 			
 		}
 
@@ -111,31 +111,33 @@ public class RegistrationDataDriven
 			String actualMessage = driver.findElement(By.xpath("//div[@class='result']")).getText();
 			System.out.println("registration IS SUCCESS & SUCCESS MESSAGE IS :" + actualMessage);
 			//Assert.assertEquals(actualMessage, expected_result);
-			generateTestStep(actualMessage,expected_result);
+			write_Output(actualMessage,expected_result);
 			
 		}
         }
 
 	}
 
-	private void generateTestStep(String message, String expected_result) {
+	private void write_Output(String message, String expected_result) 
+	{
 		 try
   	   {
   	       FileInputStream myxls = new FileInputStream(EXCEL_PATH);
   	       @SuppressWarnings("resource")
   	       XSSFWorkbook studentsSheet = new XSSFWorkbook(myxls);
-  	       XSSFSheet worksheet = studentsSheet.getSheetAt(0);
+  	       XSSFSheet worksheet = studentsSheet.getSheetAt(1);
   	       int lastRow=worksheet.getLastRowNum();
   	       System.out.println(lastRow);
   	       Row row = worksheet.createRow(++lastRow);
-  	       row.createCell(6).setCellValue(message);
+  	       row.createCell(0).setCellValue(expected_result);
+  	       row.createCell(1).setCellValue(message);
   	       if(message.equals(expected_result))
   	       {
-  	    	 row.createCell(7).setCellValue("PASSED");  
+  	    	 row.createCell(2).setCellValue("PASSED");  
   	       }
   	       else
   	       {
-  	    	 row.createCell(7).setCellValue("FAILED");   
+  	    	 row.createCell(2).setCellValue("FAILED");   
   	       }
   	       
   	       

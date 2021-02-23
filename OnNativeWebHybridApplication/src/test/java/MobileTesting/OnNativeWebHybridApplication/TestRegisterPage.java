@@ -31,7 +31,6 @@ public class TestRegisterPage
 		
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 		driver.findElement(By.xpath("//a[@class='ico-register']")).click();
 
 		WebElement selected = driver.findElement(By.xpath("//*[@id='gender-male']"));
