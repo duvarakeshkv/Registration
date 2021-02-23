@@ -3,11 +3,13 @@ package MobileTesting.OnNativeWebHybridApplication;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
@@ -22,10 +24,10 @@ import org.testng.annotations.Test;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 
-public class RegistrationDataDriven
+public class RegistrationDataDriven 
 {
 	public AndroidDriver driver;
-	public static String EXCEL_PATH="C:\\Users\\DuvarakeshKV\\Desktop\\reskill\\MOBILE TESTING\\mobiletestinglogins.xlsx";
+	public static String EXCEL_PATH="C:\\Users\\DuvarakeshKV\\Mobile_testing\\OnNativeWebHybridApplication\\src\\test\\java\\com\\config\\mobiletestinglogins.xlsx";
 	
 	@Test
 	public void login() throws InterruptedException, IOException 
@@ -42,13 +44,17 @@ public class RegistrationDataDriven
             String email_id=sheet.getRow(i).getCell(2).getStringCellValue();
             String pass_word=sheet.getRow(i).getCell(3).getStringCellValue();
             String conform_passowrd=sheet.getRow(i).getCell(4).getStringCellValue();
-            System.out.println(fn_Name+" \n"+ln_Name+"\n"+email_id+"\n"+pass_word+"\n"+conform_passowrd);
+            String expected_result=sheet.getRow(i).getCell(5).getStringCellValue();
+            
+            System.out.println(fn_Name+" \n"+ln_Name+"\n"+email_id+"\n"+pass_word+"\n"+conform_passowrd+"\n"+expected_result);
             
 		
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-		driver.findElement(By.xpath("//a[@class='ico-register']")).click();
+		WebElement reg=driver.findElement(By.xpath("//a[@class='ico-register']"));
+		Assert.assertEquals(true, reg.isDisplayed());
+		reg.click();
 
 		WebElement selected = driver.findElement(By.xpath("//*[@id='gender-male']"));
 		selected.click();
@@ -90,20 +96,63 @@ public class RegistrationDataDriven
 		
 		try 
 		{
+			
 			driver.findElement(By.xpath("//span[@class='field-validation-error']/span")).isDisplayed();
 			String errorMessage = driver.findElement(By.xpath("//span[@class='field-validation-error']/span"))
 					.getText();
 			System.out.println("Registration IS FAILED & ERROR MESSAGE IS :" + errorMessage);
+			//Assert.assertEquals(errorMessage, expected_result);
+			generateTestStep(errorMessage,expected_result);
+			
 		}
 
 		catch (NoSuchElementException e) {
-
+			
 			String actualMessage = driver.findElement(By.xpath("//div[@class='result']")).getText();
 			System.out.println("registration IS SUCCESS & SUCCESS MESSAGE IS :" + actualMessage);
+			//Assert.assertEquals(actualMessage, expected_result);
+			generateTestStep(actualMessage,expected_result);
 			
 		}
         }
 
+	}
+
+	private void generateTestStep(String message, String expected_result) {
+		 try
+  	   {
+  	       FileInputStream myxls = new FileInputStream(EXCEL_PATH);
+  	       @SuppressWarnings("resource")
+  	       XSSFWorkbook studentsSheet = new XSSFWorkbook(myxls);
+  	       XSSFSheet worksheet = studentsSheet.getSheetAt(0);
+  	       int lastRow=worksheet.getLastRowNum();
+  	       System.out.println(lastRow);
+  	       Row row = worksheet.createRow(++lastRow);
+  	       row.createCell(6).setCellValue(message);
+  	       if(message.equals(expected_result))
+  	       {
+  	    	 row.createCell(7).setCellValue("PASSED");  
+  	       }
+  	       else
+  	       {
+  	    	 row.createCell(7).setCellValue("FAILED");   
+  	       }
+  	       
+  	       
+  	      // row.createCell(2).setCellValue(value);
+  	       myxls.close();
+  	       FileOutputStream output_file =new FileOutputStream(new File(EXCEL_PATH));  
+  	       //write changes
+  	       studentsSheet.write(output_file);
+  	       output_file.close();
+  	       System.out.println("successfully written");
+  	    }
+  	   
+  	    catch(Exception e)
+  	    {
+  	    	System.out.println(e);
+  	    }
+		
 	}
 
 	
